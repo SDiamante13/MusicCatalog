@@ -1,63 +1,28 @@
 package com.diamante.musiccatalog.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Set;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name="artists")
-public class Artist {
+@Table(name="ARTIST")
+public class Artist implements Serializable {
+
     @Id
-    @Column(name="name")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int artistId;
+
     private String name;
 
-    @Column(name="albums")
-    private ArrayList<Album> albums;
-
-    public Artist() {
-    }
-
-    public Artist(String name, ArrayList<Album> albums) {
-        this.name = name;
-        this.albums = albums;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ArrayList<Album> getAlbums() {
-        return albums;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAlbums(ArrayList<Album> albums) {
-        this.albums = albums;
-    }
-
-    @Override
-    public String toString() {
-        return "Artist{" +
-                "name='" + name + '\'' +
-                ", albums=" + albums +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Artist artist = (Artist) o;
-        return Objects.equals(name, artist.name) &&
-                Objects.equals(albums, artist.albums);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, albums);
-    }
+    @ElementCollection(targetClass = Album.class)
+    private Set<Album> albums;
 }

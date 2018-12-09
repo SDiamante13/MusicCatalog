@@ -14,13 +14,13 @@ public class PersonController {
     PersonRepository personRepository;
 
     @PostMapping(path="/person")
-    public String savePerson(@RequestBody Person person){
+    public String createPerson(@RequestBody Person person){
         personRepository.save(person);
         return "Saved Person!!!";
     }
 
     @GetMapping(path="/person/{personId}")
-    public Person savePerson(@PathVariable Long personId){
+    public Person retrievePerson(@PathVariable Long personId){
         Optional<Person> foundPerson = personRepository.findById(personId);
         return foundPerson.get();
     }

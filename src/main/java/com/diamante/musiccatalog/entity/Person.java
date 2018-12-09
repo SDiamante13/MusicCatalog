@@ -17,5 +17,4 @@ public class Person {
 
     @Column(name="name")
     private String name;
-
 }
